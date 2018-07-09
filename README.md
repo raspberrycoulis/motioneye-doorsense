@@ -30,22 +30,6 @@ APP_TOKEN = 'ADD_YOURS_HERE'    # The app token required for Pushover
 USER_TOKEN = 'ADD_YOURS_HERE'   # Ths user token required for Pushover
 ```
 
-And also:
-
-```python
-# Update the variables accordingly:
-def updateTextOpen():
-    cameraNumber = "1"  # Edit accordingly to display the text on the relevant camera. 1 is default.
-    overlay = "Open"    # This is the text that will appear on the camera overlay. Open is default.
-    requests.post("http://localhost:7999/{camera}/config/set?text_left={text}".format(camera=cameraNumber, text=overlay))
-
-  # Update the variables accordingly:
-  def updateTextClose():
-      cameraNumber = "1"  # Edit accordingly to display the text on the relevant camera. 1 is default.
-      overlay = "Closed"    # This is the text that will appear on the camera overlay. Closed is default.
-      requests.post("http://localhost:7999/{camera}/config/set?text_left={text}".format(camera=cameraNumber, text=overlay))
-```
-
 Then finally:
 
 ```bash
