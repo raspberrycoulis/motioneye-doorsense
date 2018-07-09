@@ -10,6 +10,10 @@ This script assumes you have a [Pushover account](https://pushover.net), and hav
 
 If you want to create a new Pushover app, I have also included an app icon that you can find as `/image/pushover.png`. It is already optimised for Pushover, so feel free to use!
 
+### Important!
+
+**The script must be named `monitor_` and the `cameraid` - so if you want to display the status on camera 1, then the file would be called `monitor_1` and for camera 2 it would be `monitor_2` etc.**
+
 ## Install path
 
 MotionEye OS works slightly differently than other Raspberry Pi OS's as the data partition is mounted as read-only by default, but thankfully the location we'll be adding the script is read-write. Whilst `git clone git@github.com:raspberrycoulis/motioneye-doorsense.git` would work great on other Raspberry Pi OS's, on MotionEye OS it is much simpler to create the script manually by copying and pasting the code in `monitor_1.py` accordingly:
@@ -51,17 +55,34 @@ Y
 
 This will exit and save the script. **Be sure to save the file as `monitor_1` without the `.py` extension for it to work!**
 
+### Make the script executable
+
+For the script to run, you must make it executable by running:
+
+```bash
+chmod +x monitor_1
+```
+
 ## Running
 
-The script should run automatically every second thanks to the built in configuation on MotionEye OS. If you find that you are being bombarded with Pushover notifications, just comment it out in the `GPIO_detect()` function - i.e.:
+The script should run automatically every second thanks to the built in configuation on MotionEye OS. If you find that you are being bombarded with Pushover notifications, just comment it out the relevant parts in the `GPIO_detect()` function - i.e.:
 
 ```python
 def GPIO_detect():
     if GPIO.input(10):
         print("Closed")
-        updateTextClose()   # Update the text on the camera in MotionEye OS
     else:
         print("Open")
-        updateTextOpen()    # Update the text on the camera in MotionEye OS
-        #pushover()          # Call the Pushover function to alert you - comment out to stop.
+        #pushover()                  # Call the Pushover function to alert you
+        #sys.stderr.write("300")     # Wait 300 seconds (5 mins) before checking again - prevents Pushover spamming
 ```
+The `pushover()` function is commented out and the `sys.stderr.write("300")` is no longer required - this just sets the delay to 5 minutes instead of the default 1 second.
+
+### Test it
+
+Test the code simply by running the following in your terminal:
+
+```bash
+./monitor_1
+```
+If everything works, you should see eithe `Open` or `Closed` in the terminal, and if open you should also receive a Pushover notification.
