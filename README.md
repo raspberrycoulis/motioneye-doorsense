@@ -49,7 +49,7 @@ chmod +x monitor_1
 
 ## Running
 
-The script should run automatically every second thanks to the built in configuation on MotionEye OS. If you find that you are being bombarded with Pushover notifications, just comment it out the relevant parts in the `GPIO_detect()` function - i.e.:
+The script should run automatically every second, if the door is detected as closed, and every 5 minutes if the door is detected as open, thanks to the built in configuation on MotionEye OS. If you find that you are being bombarded with Pushover notifications, just comment it out the relevant parts in the `GPIO_detect()` function - i.e.:
 
 ```python
 def GPIO_detect():
